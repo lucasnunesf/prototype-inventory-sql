@@ -1,0 +1,51 @@
+# Builds the database from scratch on every push and runs the rule checks.
+# If a script breaks or a business rule stops working, the badge in the
+# README turns red.
+
+name: database-checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: postgres
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create schema, rules and views
+        run: |
+          psql -v ON_ERROR_STOP=1 -q -f sql/01_schema.sql
+          psql -v ON_ERROR_STOP=1 -q -f sql/02_business_rules.sql
+          psql -v ON_ERROR_STOP=1 -q -f sql/03_views.sql
+
+      - name: Load sample data (every movement passes through the triggers)
+        run: psql -v ON_ERROR_STOP=1 -q -f sql/04_sample_data.sql
+
+      - name: Run analysis queries
+        run: psql -v ON_ERROR_STOP=1 -f sql/05_analysis_queries.sql
+
+      - name: Run business rule checks
+        run: psql -v ON_ERROR_STOP=1 -f sql/06_rule_checks.sql
