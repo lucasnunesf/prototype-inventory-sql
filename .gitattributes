@@ -1,0 +1,6 @@
+# Count all .sql files as SQL in the language bar
+*.sql linguist-language=SQL
+*.sql linguist-detectable=true
+
+# Generated data should not count as code
+sql/04_sample_data.sql linguist-generated=true
