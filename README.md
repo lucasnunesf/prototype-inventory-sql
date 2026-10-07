@@ -4,7 +4,7 @@
 
 A relational model for tracking individual prototype parts: where each one is, where it has been, and who moved it. Business rules live inside the database, so a wrong record is rejected instead of silently becoming an inventory divergence.
 
-> **Case study:** this repository rebuilds, in SQL, a process improvement I took part in during an internship at an automotive supplier. The context, the team's solution and the results are in the [Notion case study](TODO-add-notion-link). All data here is synthetic.
+> **Case study:** this repository rebuilds, in SQL, a process improvement I took part in during an internship at an automotive supplier, which cut inventory losses and movement rework by about 60%. The context, the team's solution and the results are in the [Notion case study](https://lucasnunesf.notion.site/Tracking-prototype-parts-with-QR-codes-81a917c89c17830b82b38101d66af8e3). All data here is synthetic.
 
 ---
 
