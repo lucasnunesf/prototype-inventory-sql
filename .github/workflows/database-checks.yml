@@ -1,6 +1,6 @@
-# Builds the database from scratch on every push and runs the rule checks.
-# If a script breaks or a business rule stops working, the badge in the
-# README turns red.
+# Builds the database from scratch on every push, runs the SQL rule checks
+# and then the pytest suite. If a script breaks or a business rule stops
+# working, the badge in the README turns red.
 
 name: database-checks
 
@@ -49,3 +49,13 @@ jobs:
 
       - name: Run business rule checks
         run: psql -v ON_ERROR_STOP=1 -f sql/06_rule_checks.sql
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run pytest (43 tests, builds its own throwaway database)
+        run: pytest -v
