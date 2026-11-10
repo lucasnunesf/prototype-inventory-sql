@@ -168,6 +168,10 @@ GitHub Actions builds the database on PostgreSQL 16 and runs both the SQL checks
 
 The tests found a real gap. A part written off as lost after two missed counts could never be corrected, because rule 4 blocked every movement out of the scrap area. If that part turned up on a shelf, the database would keep calling it scrapped. Rule 4 now accepts an `ADJUSTMENT` out of scrap, and nothing else.
 
+![The tests found a part that could never come back](docs/found-again.png)
+
+The QR codes in these images are real: scan them and you get the synthetic part code (`QR-00303`, `QR-00022`).
+
 <details>
 <summary>Repository structure</summary>
 

@@ -97,7 +97,7 @@ erDiagram
 | `TRANSFER` | Internal → internal | Shelf, workshop or test lab |
 | `SHIPMENT` | Internal → external plant or supplier | Expected return date required |
 | `RETURN` | External → internal | |
-| `SCRAP` | Any → scrap area | The part cannot move again |
+| `SCRAP` | Any → scrap area | The part cannot move again, except by an `ADJUSTMENT` if it was written off by mistake |
 | `ADJUSTMENT` | Recorded location → real location | Corrects the record after a count or a rejected form |
 
 ## Design decisions
