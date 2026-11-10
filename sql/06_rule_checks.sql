@@ -53,6 +53,7 @@ $$;
 
 -- QR-00303 ends the sample data on shelf WH-C-02 (last movement 2026-09-08).
 -- QR-00317 was scrapped on 2026-06-22.
+-- QR-00022 was written off as lost after two counts on 2026-06-30.
 
 DO $checks$
 BEGIN
@@ -111,10 +112,23 @@ BEGIN
         $q$ SELECT pg_temp.submit_form('QR-00303', 'TRANSFER', 'WH-C-02', 'WH-C-02', '2026-10-01 09:00') $q$,
         'chk_movement_changes_location');
 
+    -- Rule 4 - a part written off as lost (QR-00022) can be corrected
+    -- with an ADJUSTMENT when it turns up again.
+    PERFORM pg_temp.submit_form('QR-00022', 'ADJUSTMENT', 'SCRAP', 'WH-B-04', '2026-10-01 09:00');
+
     -- Rule 7 - a valid form goes through and the part moves in the system.
     PERFORM pg_temp.submit_form('QR-00303', 'TRANSFER', 'WH-C-02', 'WS-01', '2026-10-01 09:00');
 END;
 $checks$;
+
+INSERT INTO rule_check_results
+SELECT
+    'Rule 4 - a written-off part can be found again',
+    l.location_code = 'WH-B-04',
+    'Part is now at ' || l.location_code
+FROM parts p
+JOIN locations l ON l.location_id = p.current_location_id
+WHERE p.qr_code = 'QR-00022';
 
 INSERT INTO rule_check_results
 SELECT

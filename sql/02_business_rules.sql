@@ -6,7 +6,8 @@
 --   1. A part can only leave the place where the system says it is.
 --   2. The movement type must match where the part is going.
 --   3. Parts sent outside the site must have an expected return date.
---   4. Scrapped parts cannot move again.
+--   4. Scrapped parts cannot move again (only an ADJUSTMENT can bring
+--      back a part written off by mistake).
 --   5. Movements cannot be back-dated before the part's last movement.
 --   6. The movement history is append-only (no UPDATE or DELETE).
 --   7. A part's current location is always derived from its movements.
@@ -66,8 +67,10 @@ BEGIN
                 v_from_code;
         END IF;
 
-        -- Rule 4: scrapped parts are final.
-        IF v_from_type = 'SCRAP' THEN
+        -- Rule 4: scrapped parts are final. The one exception is an
+        -- ADJUSTMENT: a part written off as lost can turn up at a later
+        -- count, and the record has to be correctable.
+        IF v_from_type = 'SCRAP' AND NEW.movement_type <> 'ADJUSTMENT' THEN
             RAISE EXCEPTION 'Part % has been scrapped and cannot be moved', v_part.qr_code;
         END IF;
 
