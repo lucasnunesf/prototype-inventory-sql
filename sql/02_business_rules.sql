@@ -133,6 +133,8 @@ FOR EACH ROW EXECUTE FUNCTION fn_block_history_changes();
 -- -----------------------------------------------------------------------------
 -- Helper: where did the system think a part was at a given moment?
 -- Used to compare a physical count with the records at that time.
+-- The table name is schema-qualified because REFRESH MATERIALIZED VIEW
+-- (08_reporting_mart.sql) runs with an empty search_path.
 -- -----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION fn_location_at(p_part_id integer, p_at timestamp)
 RETURNS smallint
@@ -140,7 +142,7 @@ LANGUAGE sql
 STABLE
 AS $$
     SELECT m.to_location_id
-    FROM movements m
+    FROM inventory.movements m
     WHERE m.part_id = p_part_id
       AND m.moved_at <= p_at
     ORDER BY m.moved_at DESC, m.movement_id DESC
