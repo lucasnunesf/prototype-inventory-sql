@@ -295,6 +295,12 @@ Columns and table descriptions: [docs/data-model.md](docs/data-model.md).
 - Power BI report on the `mart` schema, connected as `inv_bi_reader`.
 - A small web form that writes straight to `movements`, replacing the spreadsheet step.
 
+## How this was built
+
+The problem, the business rules and the design decisions are mine. They come from my internship in the prototype area at Bosch do Brasil. I used an AI coding assistant to write the code faster and reviewed the result.
+
+<!-- Lucas: write here, in your own words, one or two sentences about where you saw this problem happen. -->
+
 ## Author
 
 **Lucas Fernandes Nunes** · [LinkedIn](https://linkedin.com/in/lucas-fernandes-nunes-335867256) · [Portfolio](https://lucasnunesf.notion.site)
