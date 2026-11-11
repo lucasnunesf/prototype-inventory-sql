@@ -88,6 +88,7 @@ erDiagram
 | `movements` | Form submission | Append-only. The part's location is derived from this history |
 | `inventory_counts` | One location checked at one moment | Monthly counts of every shelf |
 | `count_scans` | QR code scanned during a count | What was physically found |
+| `count_round_closures` | One count round (all shelves, same moment) | When it was closed, by whom, and how many corrections it posted (`07_count_closing.sql`) |
 
 ## Movement types
 
@@ -106,3 +107,25 @@ erDiagram
 - **History is append-only.** Movements cannot be updated or deleted. A mistake is fixed with an `ADJUSTMENT`, which keeps the audit trail intact and makes every correction visible (query Q7).
 - **Counts store what was found, not the difference.** `count_scans` only records the QR codes scanned. The comparison with the system is calculated by `v_count_reconciliation`, using `fn_location_at()` to rebuild where the system had each part at the moment of the count.
 - **Codes in the form, ids in the tables.** The form works with readable codes (`QR-00303`, `WH-C-02`). The tables use numeric keys, and the inserts translate one into the other with joins.
+
+## Reporting mart (`mart` schema)
+
+Built by `08_reporting_mart.sql` for Power BI. The report reads only from here.
+
+| Object | Kind | Grain |
+|---|---|---|
+| `dim_date` | Table | One day. Includes business day and count day flags |
+| `dim_part` | View | One physical part, with type, customer and project |
+| `dim_location` | View | One location, with aisle and location group |
+| `dim_employee` | View | One employee |
+| `fact_movement` | View | One movement, with hours at destination and, for shipments, return date and days late |
+| `fact_daily_stock` | Materialized view | Parts on hand per location at the end of each day |
+| `kpi_monthly` | Materialized view | One month: flows, on-time returns, count accuracy, month-end snapshot |
+
+## Roles (`09_access_roles.sql`)
+
+| Role | Access |
+|---|---|
+| `inv_form_app` | Reads lookup tables, inserts movements. Row-level security refuses `ADJUSTMENT` |
+| `inv_logistics` | Form rights, plus adjustments, counts and `sp_close_count_round` |
+| `inv_bi_reader` | Reads `mart` only |
