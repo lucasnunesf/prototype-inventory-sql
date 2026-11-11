@@ -123,3 +123,93 @@ WHERE location_type = 'WAREHOUSE'
 GROUP BY location_code
 ORDER BY parts DESC
 LIMIT 10;
+
+-- -----------------------------------------------------------------------------
+-- Q10. How long does a part stay at each kind of place? Median and 90th
+--      percentile, so a few forgotten parts do not hide the typical stay.
+-- -----------------------------------------------------------------------------
+WITH stays AS (
+    SELECT
+        l.location_type,
+        LEAD(m.moved_at) OVER (PARTITION BY m.part_id
+                               ORDER BY m.moved_at, m.movement_id) - m.moved_at AS stay
+    FROM movements m
+    JOIN locations l ON l.location_id = m.to_location_id
+)
+SELECT
+    location_type,
+    COUNT(*)                                                             AS finished_stays,
+    ROUND((percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(epoch FROM stay))
+           / 86400)::numeric, 1)                                         AS median_days,
+    ROUND((percentile_cont(0.9) WITHIN GROUP (ORDER BY EXTRACT(epoch FROM stay))
+           / 86400)::numeric, 1)                                         AS p90_days
+FROM stays
+WHERE stay IS NOT NULL                       -- still there: not finished yet
+GROUP BY location_type
+ORDER BY median_days DESC;
+
+-- -----------------------------------------------------------------------------
+-- Q11. Which customers drive the work? Pareto of movements: the customers
+--      that together make up 80% of all movements.
+-- -----------------------------------------------------------------------------
+WITH per_customer AS (
+    SELECT c.customer_code, COUNT(*) AS movements
+    FROM movements m
+    JOIN parts     p  ON p.part_id     = m.part_id
+    JOIN projects  pr ON pr.project_id = p.project_id
+    JOIN customers c  ON c.customer_id = pr.customer_id
+    GROUP BY c.customer_code
+),
+ranked AS (
+    SELECT
+        customer_code,
+        movements,
+        ROUND(100.0 * movements / SUM(movements) OVER (), 1)            AS share_pct,
+        ROUND(100.0 * SUM(movements) OVER (ORDER BY movements DESC, customer_code)
+              / SUM(movements) OVER (), 1)                              AS cumulative_pct
+    FROM per_customer
+)
+SELECT
+    customer_code,
+    movements,
+    share_pct,
+    cumulative_pct,
+    -- A customer is in the top group if the ones before it had not yet
+    -- reached 80%.
+    COALESCE(LAG(cumulative_pct) OVER (ORDER BY movements DESC, customer_code), 0) < 80
+                                                                        AS in_top_80_pct
+FROM ranked
+ORDER BY movements DESC, customer_code;
+
+-- -----------------------------------------------------------------------------
+-- Q12. Which shelves were wrong in several counts in a row?
+--      Gaps and islands: number every count round, number the rounds where
+--      the shelf had a divergence, and the difference stays constant within
+--      each unbroken streak.
+-- -----------------------------------------------------------------------------
+WITH rounds AS (
+    SELECT counted_at, DENSE_RANK() OVER (ORDER BY counted_at) AS round_no
+    FROM (SELECT DISTINCT counted_at FROM inventory_counts) r
+),
+divergent AS (
+    SELECT DISTINCT rc.counted_location, r.round_no, rc.counted_at::date AS count_date
+    FROM v_count_reconciliation rc
+    JOIN rounds r ON r.counted_at = rc.counted_at
+    WHERE rc.result <> 'MATCH'
+),
+islands AS (
+    SELECT
+        counted_location,
+        count_date,
+        round_no - ROW_NUMBER() OVER (PARTITION BY counted_location ORDER BY round_no) AS island
+    FROM divergent
+)
+SELECT
+    counted_location                       AS shelf,
+    COUNT(*)                               AS counts_in_a_row,
+    MIN(count_date)                        AS from_count,
+    MAX(count_date)                        AS to_count
+FROM islands
+GROUP BY counted_location, island
+HAVING COUNT(*) >= 3
+ORDER BY counts_in_a_row DESC, shelf;
