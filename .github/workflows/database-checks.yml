@@ -50,6 +50,15 @@ jobs:
       - name: Run business rule checks
         run: psql -v ON_ERROR_STOP=1 -f sql/06_rule_checks.sql
 
+      - name: Count closing, reporting mart and roles
+        run: |
+          psql -v ON_ERROR_STOP=1 -q -f sql/07_count_closing.sql
+          psql -v ON_ERROR_STOP=1 -q -f sql/08_reporting_mart.sql
+          psql -v ON_ERROR_STOP=1 -f sql/09_access_roles.sql
+
+      - name: Run feature checks (count closing, mart, roles)
+        run: psql -v ON_ERROR_STOP=1 -f sql/10_feature_checks.sql
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -57,5 +66,5 @@ jobs:
       - name: Install test dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Run pytest (43 tests, builds its own throwaway database)
+      - name: Run pytest ( builds its own throwaway database)
         run: pytest -v

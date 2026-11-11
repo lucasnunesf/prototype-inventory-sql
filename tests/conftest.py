@@ -19,7 +19,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 SQL = ROOT / "sql"
-BUILD_FILES = ["01_schema.sql", "02_business_rules.sql", "03_views.sql", "04_sample_data.sql"]
+BUILD_FILES = ["01_schema.sql", "02_business_rules.sql", "03_views.sql", "04_sample_data.sql",
+               "07_count_closing.sql", "08_reporting_mart.sql", "09_access_roles.sql"]
 
 # Make scripts/ importable (generate_sample_data.py).
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -43,7 +44,7 @@ def dbname():
 
 @pytest.fixture(scope="session")
 def built_db(dbname):
-    """Build schema, rules, views and sample data once, like the README says."""
+    """Build the whole database once, like the README says."""
     with psycopg.connect(dbname=dbname, autocommit=True) as conn:
         for f in BUILD_FILES:
             run_file(conn, f)
