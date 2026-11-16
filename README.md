@@ -290,11 +290,6 @@ Columns and table descriptions: [docs/data-model.md](docs/data-model.md).
 - **Divergence**: when the record and the shelf disagree.
 </details>
 
-## Next steps
-
-- Power BI report on the `mart` schema, connected as `inv_bi_reader`.
-- A small web form that writes straight to `movements`, replacing the spreadsheet step.
-
 ## How this was built
 
 The problem, the business rules and the design decisions are mine. They come from my internship in the prototype area at Bosch do Brasil. I used an AI coding assistant to write the code faster and reviewed the result.
