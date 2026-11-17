@@ -297,6 +297,6 @@ The problem, the business rules and the design decisions are mine. They come fro
 
 ## Author
 
-**Lucas Fernandes Nunes** · [LinkedIn](https://linkedin.com/in/lucas-fernandes-nunes-335867256) · [Portfolio](https://lucasnunesf.notion.site)
+**Lucas Fernandes Nunes** · [LinkedIn](https://www.linkedin.com/in/lucasfernandesnunes) · [Portfolio](https://lucasnunesf.notion.site/Lucas-Nunes-Data-BI-Analyst-3de917c89c178092885cf639b619767b)
 
 *All customers, projects, part types, locations and employees are fictional. No company data is used in this repository.*
