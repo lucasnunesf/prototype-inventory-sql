@@ -96,9 +96,9 @@ python scripts/load_to_sql.py      # creates inventory.db and the CSV files
 
 To run the questions, open `inventory.db` in any SQLite tool (for example DB Browser for SQLite) and run `sql/03_questions.sql`.
 
-## How this was built
+## Background
 
-The process and the questions come from my internship. I used an AI coding assistant to write the code faster and reviewed the result.
+The process and the questions come from my internship.
 
 ---
 
