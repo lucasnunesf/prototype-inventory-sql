@@ -1,0 +1,33 @@
+month,reason,movements
+2026-04,Assembly,19
+2026-04,Back to storage,17
+2026-04,New part,108
+2026-04,Sent to other plant,10
+2026-04,Sent to supplier,13
+2026-04,Test,21
+2026-05,Assembly,73
+2026-05,Back to storage,97
+2026-05,New part,42
+2026-05,Sent to other plant,9
+2026-05,Sent to supplier,24
+2026-05,Test,38
+2026-06,Assembly,62
+2026-06,Back to storage,136
+2026-06,Sent to other plant,20
+2026-06,Sent to supplier,29
+2026-06,Test,30
+2026-07,Assembly,69
+2026-07,Back to storage,135
+2026-07,Sent to other plant,10
+2026-07,Sent to supplier,21
+2026-07,Test,32
+2026-08,Assembly,56
+2026-08,Back to storage,143
+2026-08,Sent to other plant,13
+2026-08,Sent to supplier,20
+2026-08,Test,49
+2026-09,Assembly,68
+2026-09,Back to storage,133
+2026-09,Sent to other plant,17
+2026-09,Sent to supplier,17
+2026-09,Test,37

@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Database created by scripts/load_to_sql.py
+inventory.db
