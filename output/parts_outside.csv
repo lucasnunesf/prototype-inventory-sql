@@ -1,0 +1,40 @@
+part_code,part_type,customer,current_place,sent_at,days_outside
+QR-0005,Steering gear,Customer 09,Supplier,2026-09-03 10:46:00,26
+QR-0007,Steering column,Customer 07,Other plant,2026-09-26 07:58:00,3
+QR-0008,Tie rod,Customer 02,Other plant,2026-09-06 08:25:00,23
+QR-0017,Steering column,Customer 10,Other plant,2026-09-05 13:47:00,24
+QR-0020,Torque sensor,Customer 06,Other plant,2026-09-29 08:10:00,0
+QR-0023,Steering gear,Customer 10,Supplier,2026-09-16 14:42:00,12
+QR-0027,Intermediate shaft,Customer 06,Other plant,2026-09-10 16:27:00,18
+QR-0030,Steering column,Customer 10,Supplier,2026-09-22 11:21:00,7
+QR-0032,Intermediate shaft,Customer 06,Supplier,2026-08-20 07:18:00,40
+QR-0034,Steering column,Customer 02,Other plant,2026-08-27 16:17:00,32
+QR-0035,Tie rod,Customer 03,Supplier,2026-08-26 12:10:00,34
+QR-0040,Control unit,Customer 10,Other plant,2026-09-01 09:45:00,28
+QR-0043,Steering column,Customer 05,Supplier,2026-09-20 14:53:00,8
+QR-0045,Steering gear,Customer 05,Other plant,2026-08-08 09:25:00,52
+QR-0046,Intermediate shaft,Customer 05,Supplier,2026-09-15 14:08:00,13
+QR-0048,Steering gear,Customer 08,Other plant,2026-09-13 14:56:00,15
+QR-0052,Electric motor,Customer 03,Other plant,2026-09-24 07:08:00,5
+QR-0053,Torque sensor,Customer 07,Supplier,2026-09-19 09:24:00,10
+QR-0062,Steering column,Customer 03,Supplier,2026-09-25 14:36:00,3
+QR-0063,Steering pump,Customer 04,Other plant,2026-09-01 14:02:00,27
+QR-0064,Torque sensor,Customer 01,Other plant,2026-09-15 13:49:00,14
+QR-0065,Intermediate shaft,Customer 10,Other plant,2026-08-09 12:45:00,51
+QR-0067,Electric motor,Customer 01,Supplier,2026-09-28 15:38:00,0
+QR-0075,Tie rod,Customer 01,Other plant,2026-09-15 12:42:00,14
+QR-0078,Steering pump,Customer 02,Supplier,2026-09-11 10:23:00,18
+QR-0094,Control unit,Customer 05,Supplier,2026-09-13 14:36:00,15
+QR-0102,Control unit,Customer 04,Supplier,2026-08-30 12:27:00,30
+QR-0109,Electric motor,Customer 08,Other plant,2026-09-13 12:03:00,16
+QR-0111,Control unit,Customer 08,Other plant,2026-09-21 16:51:00,7
+QR-0122,Steering pump,Customer 07,Supplier,2026-09-11 14:39:00,17
+QR-0123,Control unit,Customer 02,Supplier,2026-09-18 09:08:00,11
+QR-0124,Tie rod,Customer 08,Other plant,2026-09-12 07:54:00,17
+QR-0125,Tie rod,Customer 02,Supplier,2026-09-23 07:23:00,6
+QR-0127,Steering pump,Customer 01,Supplier,2026-08-10 15:56:00,49
+QR-0133,Steering gear,Customer 02,Supplier,2026-09-08 08:01:00,21
+QR-0138,Torque sensor,Customer 10,Supplier,2026-09-20 08:31:00,9
+QR-0140,Tie rod,Customer 03,Supplier,2026-08-30 07:16:00,30
+QR-0144,Steering pump,Customer 09,Supplier,2026-09-08 13:04:00,21
+QR-0148,Steering gear,Customer 03,Other plant,2026-09-11 15:15:00,17
