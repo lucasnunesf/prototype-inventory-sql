@@ -71,6 +71,12 @@ Then it creates the tables in a SQLite database and inserts the rows. If a form 
 
 **4. Power BI.** Each view is saved as a CSV in `output/`. Power BI reads these three files: stock by place, movements per month and a list of parts outside, oldest first.
 
+## Example dashboard
+
+> **This is only an example** of how a Power BI report on this data could look. It is an image built from the CSV files in `output/`, not a Power BI file.
+
+![Example dashboard](docs/dashboard-example.png)
+
 ## Results (fake data)
 
 | | |
